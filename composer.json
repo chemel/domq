@@ -1,0 +1,7 @@
+{
+    "require": {
+        "alc/dom-parser-helper": "dev-master",
+        "nategood/commando": "*"
+    },
+    "minimum-stability": "dev"
+}
