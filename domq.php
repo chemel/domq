@@ -30,6 +30,9 @@ $selector = $command[1];
 $function = $command[2];
 $arguments = isset($command[3]) ? array($command[3]) : array();
 
+// Shortcut
+if($function == 'attr') $function = 'getAttribute';
+
 // Scrappe
 $helper = new HtmlDomParserHelper();
 $parser = $helper->parse($url);
