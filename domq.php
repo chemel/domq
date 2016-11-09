@@ -6,6 +6,8 @@ require __DIR__.'/vendor/autoload.php';
 use Commando\Command;
 use Alc\HtmlDomParserHelper;
 
+define('MAX_FILE_SIZE', 12600000);
+
 $command = new Command();
 
 // Define first option
