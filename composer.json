@@ -1,4 +1,7 @@
 {
+    "autoload": {
+        "psr-0": { "Alc\\": "src/" }
+    },
     "require": {
         "alc/dom-parser-helper": "dev-master",
         "nategood/commando": "*"
