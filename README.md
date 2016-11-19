@@ -27,8 +27,11 @@ php domq.php https://news.ycombinator.com/ a.storylink getAttribute href
 # Query Google Urls
 php domq.php https://www.google.fr/search?q=github 'h3.r a' getAttribute href
 
-# Query local file
-domq sitemap.xml 'sitemap loc' innertext
+# Query a local file
+php domq.php sitemap.xml 'sitemap loc' innertext
+
+# Query a list of urls
+php domq.php list=urls.txt 'h1.entry-title a' attr href
 
 # Show help
 php domq.php --help

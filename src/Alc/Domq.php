@@ -7,11 +7,6 @@ use Alc\HtmlDomParserHelper;
 
 class Domq {
 
-	private $url;
-	private $selector;
-	private $function;
-	private $arguments;
-
 	public function run() {
 
 		$command = new Command();
@@ -33,30 +28,46 @@ class Domq {
 		    ->describedAs('arguments');
 
 		// Arguments
-		$this->url = $command[0];
-		$this->selector = $command[1];
-		$this->function = $command[2];
-		$this->arguments = isset($command[3]) ? array($command[3]) : array();
+		$url = $command[0];
+		$selector = $command[1];
+		$function = $command[2];
+		$arguments = isset($command[3]) ? array($command[3]) : array();
 
 		// Shortcut
-		if($this->function == 'attr') $this->function = 'getAttribute';
+		if($function == 'attr') $function = 'getAttribute';
 
-		$parser = $this->getParser( $this->url );
+		if( stripos($url, 'list=') === 0 ) {
 
-		if( $parser ) {
-
-			$nodes = $parser->find($this->selector);
-
-			if( empty($nodes) ) $this->println('[DOMQ ERROR] Your query return empty result');
-
-			foreach( $nodes as $node ) {
-
-			    $this->println(call_user_func_array(array($node, $this->function), $this->arguments));
-			}
+			$urls = explode("\n", file_get_contents(substr($url, 5)));
 		}
 		else {
 
-			$this->println('[DOMQ ERROR] Parse error, url: '.$url);
+			$urls = array( $url );
+		}
+
+		foreach( $urls as $url ) {
+
+			$url = trim($url);
+
+			if( empty($url) ) continue;
+
+			$parser = $this->getParser( $url );
+
+			if( $parser ) {
+
+				$nodes = $parser->find($selector);
+
+				if( empty($nodes) ) $this->println('[DOMQ ERROR] Your query return empty result');
+
+				foreach( $nodes as $node ) {
+
+				    $this->println(call_user_func_array(array($node, $function), $arguments));
+				}
+			}
+			else {
+
+				$this->println('[DOMQ ERROR] Parse error, url: '.$url);
+			}
 		}
 	}
 
