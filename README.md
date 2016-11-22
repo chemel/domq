@@ -19,21 +19,29 @@ Usage:
 ```bash
 
 # Query Hacker News Titles
-php domq.php https://news.ycombinator.com/ a.storylink innertext
+domq https://news.ycombinator.com/ a.storylink innertext
 
 # Query Hacker News Urls
-php domq.php https://news.ycombinator.com/ a.storylink getAttribute href
+domq https://news.ycombinator.com/ a.storylink getAttribute href
 
 # Query Google Urls
-php domq.php https://www.google.fr/search?q=github 'h3.r a' getAttribute href
+domq https://www.google.fr/search?q=github 'h3.r a' attr href
+
 
 # Query a local file
-php domq.php sitemap.xml 'sitemap loc' innertext
+domq sitemap.xml 'sitemap loc' innertext
 
 # Query a list of urls
-php domq.php list=urls.txt 'h1.entry-title a' attr href
+domq urls=urls.txt 'h1.entry-title a' attr href
+
+# Parse from stdin
+curl -s http://blog.chemel.fr/sitemap.xml | domq stdin loc innertext
+
+# Piping
+domq http://blog.chemel.fr/sitemap.xml loc | domq urls=- loc
+
 
 # Show help
-php domq.php --help
+domq --help
 
 ```

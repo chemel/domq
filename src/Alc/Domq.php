@@ -21,8 +21,8 @@ class Domq {
 		    ->describedAs('selector');
 
 		$command->option()
-		    ->require()
-		    ->describedAs('function');
+		    ->describedAs('function')
+		    ->default('innertext');
 
 		$command->option()
 		    ->describedAs('arguments');
@@ -36,11 +36,21 @@ class Domq {
 		// Shortcut
 		if($function == 'attr') $function = 'getAttribute';
 
-		if( stripos($url, 'list=') === 0 ) {
+		if( $url == 'stdin' ) { // Piping xml file
+
+			$xmlContent = $this->getPipeContent();
+
+			$urls = array('-');
+		}
+		elseif( $url == 'urls=-' ) { // Pipping url file list
+
+			$urls = explode("\n", $this->getPipeContent());
+		}
+		elseif( stripos($url, 'urls=') === 0 ) { // Get urls from file
 
 			$urls = explode("\n", file_get_contents(substr($url, 5)));
 		}
-		else {
+		else { // Défault single url
 
 			$urls = array( $url );
 		}
@@ -51,7 +61,14 @@ class Domq {
 
 			if( empty($url) ) continue;
 
-			$parser = $this->getParser( $url );
+			if( $url == '-' && isset($xmlContent) ) {
+
+				$helper = new HtmlDomParserHelper();
+				$parser = $helper->getHtmlDomParser($helper->convertEncodingToUTF8($xmlContent));
+			}
+			else {
+				$parser = $this->getParser( $url );
+			}
 
 			if( $parser ) {
 
@@ -71,7 +88,7 @@ class Domq {
 		}
 	}
 
-	public function getParser( $url ) {
+	private function getParser( $url ) {
 
 		$helper = new HtmlDomParserHelper();
 
@@ -91,5 +108,21 @@ class Domq {
 	private function println( $text ) {
 
 		echo $text, "\n";
+	}
+
+	private function getPipeContent() {
+
+		$data = '';
+
+		$fd = fopen("php://stdin", "r");
+
+		while (!feof($fd)) {
+
+			$data .= fread($fd, 1024);
+		}
+
+		fclose($fd);
+
+		return $data;
 	}
 }
