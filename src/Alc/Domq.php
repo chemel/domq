@@ -38,13 +38,13 @@ class Domq {
 
 		if( $url == 'stdin' ) { // Piping xml file
 
-			$xmlContent = $this->getPipeContent();
+			$xmlContent = file_get_contents("php://stdin");
 
 			$urls = array('-');
 		}
 		elseif( $url == 'urls=-' ) { // Pipping url file list
 
-			$urls = explode("\n", $this->getPipeContent());
+			$urls = explode("\n", file_get_contents("php://stdin"));
 		}
 		elseif( stripos($url, 'urls=') === 0 ) { // Get urls from file
 
@@ -108,21 +108,5 @@ class Domq {
 	private function println( $text ) {
 
 		echo $text, "\n";
-	}
-
-	private function getPipeContent() {
-
-		$data = '';
-
-		$fd = fopen("php://stdin", "r");
-
-		while (!feof($fd)) {
-
-			$data .= fread($fd, 1024);
-		}
-
-		fclose($fd);
-
-		return $data;
 	}
 }
