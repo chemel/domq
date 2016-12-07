@@ -12,8 +12,8 @@
         }
     ],
     "autoload": {
-        "psr-0": {
-        	"Alc\\": "src/"
+        "psr-4": {
+            "Alc\\Domq\\": "src/"
         }
     },
     "require": {

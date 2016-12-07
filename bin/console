@@ -8,7 +8,7 @@ elseif( file_exists(__DIR__.'/../../../autoload.php') ) {
 	require __DIR__.'/../../../autoload.php';
 }
 
-use Alc\Domq;
+use Alc\Domq\Domq;
 
 define('MAX_FILE_SIZE', 12600000);
 

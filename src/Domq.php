@@ -1,6 +1,6 @@
 <?php
 
-namespace Alc;
+namespace Alc\Domq;
 
 use Commando\Command;
 use Alc\HtmlDomParserHelper;
