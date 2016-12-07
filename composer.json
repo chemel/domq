@@ -21,6 +21,9 @@
         "alc/dom-parser-helper": "^1.0",
         "nategood/commando": "*"
     },
+    "bin": [
+        "bin/domq"
+    ],
     "extra": {
         "branch-alias": {
             "dev-master": "0.5-dev"
