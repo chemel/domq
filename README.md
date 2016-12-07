@@ -1,20 +1,18 @@
 # domq
 Command line HTML DOM Parser
 
-Install:
-======
+## Install globaly via composer
 
 ```bash
 
-composer install
+composer global require alc/domq
 
-# Create symlink (optional)
-ln -s /var/www/domq/domq.php /usr/bin/domq
+# Make sure you have export PATH in your ~/bashrc
+export PATH=~/.config/composer/vendor/bin:$PATH
 
 ```
 
-Usage:
-======
+## Usage
 
 ```bash
 
